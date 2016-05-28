@@ -45,6 +45,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -89,6 +91,8 @@ public class RecognizeActivity extends ActionBarActivity {
     // The edit to show status and result.
     private EditText mEditText;
 
+    private String mMsgOptions = "Instruções.Para escutar novamente a mensagem, passe o dedo na metade inferior da tela. Para tirar uma nova foto clique no botão Tirar foto, que está localizado no topo da tela, ou em voltar do celular. Para Sair do aplicativo, pressione Home.";
+
     private VisionServiceClient client;
 
     @Override
@@ -121,9 +125,9 @@ public class RecognizeActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //if (id == R.id.action_settings) {
+        //    return true;
+        //}
 
         return super.onOptionsItemSelected(item);
     }
@@ -156,8 +160,8 @@ public class RecognizeActivity extends ActionBarActivity {
                             mImageUri, getContentResolver());
                     if (mBitmap != null) {
                         // Show the image on screen.
-                        ImageView imageView = (ImageView) findViewById(R.id.selectedImage);
-                        imageView.setImageBitmap(mBitmap);
+                        //ImageView imageView = (ImageView) findViewById(R.id.selectedImage);
+                        //imageView.setImageBitmap(mBitmap);
 
                         // Add detection log.
                         Log.d("AnalyzeActivity", "Image: " + mImageUri + " resized to " + mBitmap.getWidth()
@@ -187,8 +191,8 @@ public class RecognizeActivity extends ActionBarActivity {
                             mImageUri, getContentResolver());
                     if (mBitmap != null) {
                         // Show the image on screen.
-                        ImageView imageView = (ImageView) findViewById(R.id.selectedImage);
-                        imageView.setImageBitmap(mBitmap);
+                       // ImageView imageView = (ImageView) findViewById(R.id.selectedImage);
+                       // imageView.setImageBitmap(mBitmap);
 
                         // Add detection log.
                         Log.d("AnalyzeActivity", "Image: " + mImageUri + " resized to " + mBitmap.getWidth()
@@ -240,8 +244,10 @@ public class RecognizeActivity extends ActionBarActivity {
 
     public void doRecognize() {
         mButtonSelectImage.setEnabled(false);
-        mEditText.setText("Analisando...");
-
+        //mEditText.setText("Analisando a imagem, aguarde.");
+        mEditText.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+        mEditText.requestFocus();
+        mEditText.setEnabled(false);
         try {
             new doRequest().execute();
         } catch (Exception e)
@@ -263,6 +269,9 @@ public class RecognizeActivity extends ActionBarActivity {
 
         String result = gson.toJson(ocr);
         Log.d("result", result);
+        if(result==null || result.equals("")){
+            result = "Texto não reconhecido, realize a fotografia novamente.";
+        }
 
         return result;
     }
@@ -279,7 +288,7 @@ public class RecognizeActivity extends ActionBarActivity {
             try {
                 return process();
             } catch (Exception e) {
-                this.e = e;    // Store error
+                this.e = new Exception("Problema no reconhecimento. Verifique sua conexão com a internet e após tente novamente.");    // Store error
             }
 
             return null;
@@ -291,7 +300,7 @@ public class RecognizeActivity extends ActionBarActivity {
             // Display based on error existence
 
             if (e != null) {
-                mEditText.setText("Error: " + e.getMessage());
+                mEditText.setText("Problema: " + e.getMessage());
                 this.e = null;
             } else {
                 Gson gson = new Gson();
@@ -310,6 +319,15 @@ public class RecognizeActivity extends ActionBarActivity {
 
                 mEditText.setText(result);
             }
+            if(mEditText.getText().length()<=0){
+                mEditText.setText("Texto não reconhecido, realize a fotografia novamente.");
+            }else{
+                mEditText.getText().append("Fim do reconhecimento");
+            }
+            mEditText.getText().append(mMsgOptions);
+            mEditText.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED);
+            mEditText.requestFocus();
+
             mButtonSelectImage.setEnabled(true);
         }
     }
