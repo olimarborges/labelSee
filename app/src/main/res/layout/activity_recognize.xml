@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:background="#000000"
+    android:background="#000080"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.microsoft.projectoxford.visionsample.RecognizeActivity">
@@ -16,22 +16,31 @@
         android:layout_alignParentStart="true">
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
             <Button
-
-                android:layout_width="350dp"
+                android:layout_width="180dp"
                 android:layout_height="210dp"
-                android:id="@+id/buttonSelectImage"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
                 android:text="@string/take_a_photo"
+                android:id="@+id/buttonSelectImage"
                 style="@style/ButtonStyle"
-                android:onClick="selectImage" />
+                android:textAlignment="center"
+                android:onClick="selectImage"/>
+
+            <ImageView
+                android:id="@+id/selectedImage"
+                android:layout_width="170dp"
+                android:layout_height="200dp"
+                android:layout_toRightOf="@+id/image_control"
+                android:layout_toEndOf="@+id/image_control"
+                android:background="#000080"
+                android:layout_margin="6dp"
+                android:backgroundTint="#000080"
+                android:contentDescription="@string/msgDescrImage"
+                android:importantForAccessibility="yes"
+                />
 
         </LinearLayout>
 
@@ -49,6 +58,7 @@
                 android:ems="10"
                 android:id="@+id/editTextResult"
                 android:layout_weight="1"
+                android:textColor="#ffffff"
                 android:contentDescription="@string/textoDicaEditText" />
         </LinearLayout>
     </LinearLayout>

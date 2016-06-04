@@ -91,7 +91,7 @@ public class RecognizeActivity extends ActionBarActivity {
     // The edit to show status and result.
     private EditText mEditText;
 
-    private String mMsgOptions = "Instruções.Para escutar novamente a mensagem, passe o dedo na metade inferior da tela. Para tirar uma nova foto clique no botão Tirar foto, que está localizado no topo da tela, ou em voltar do celular. Para Sair do aplicativo, pressione Home.";
+    private String mMsgOptions = "Instruções. Para escutar novamente a mensagem, passe o dedo na metade inferior da tela. Para tirar uma nova foto clique no botão Tirar foto, que está localizado no topo da tela, ou em voltar do celular. Para Sair do aplicativo, pressione Home.";
 
     private VisionServiceClient client;
 
@@ -300,7 +300,7 @@ public class RecognizeActivity extends ActionBarActivity {
             // Display based on error existence
 
             if (e != null) {
-                mEditText.setText("Problema: " + e.getMessage());
+                mEditText.setText("Erro: " + e.getMessage());
                 this.e = null;
             } else {
                 Gson gson = new Gson();
@@ -322,7 +322,7 @@ public class RecognizeActivity extends ActionBarActivity {
             if(mEditText.getText().length()<=0){
                 mEditText.setText("Texto não reconhecido, realize a fotografia novamente.");
             }else{
-                mEditText.getText().append("Fim do reconhecimento");
+                mEditText.getText().append("Fim do reconhecimento. ");
             }
             mEditText.getText().append(mMsgOptions);
             mEditText.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED);

@@ -1,7 +1,7 @@
 <!-- Copyright (c) Microsoft. All rights reserved. -->
 
 <resources>
-    <color name="button_pressed_background">#000000</color>
-    <color name="button_enabled_background">#000000</color>
-    <color name="button_disabled_background">#000000</color>
+    <color name="button_pressed_background">#191970</color>
+    <color name="button_enabled_background">#000080</color>
+    <color name="button_disabled_background">#000080</color>
 </resources>
