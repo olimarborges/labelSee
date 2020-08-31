@@ -4,9 +4,9 @@ Contributors:
 
 [Olimar Teixeira Borges](https://github.com/olimarborges), 
 [Juliana Damasio Oliveira](https://github.com/julianadamasio), 
-[Vanessa Machado Paixão Cortês]()
-[Rafael Damasceno]()
-[Márcia Campos](https://github.com/marciabcampos)
+[Vanessa Machado Paixão Cortês](),
+[Rafael Damasceno](https://github.com/leafarmd) and
+[Márcia Campos](https://github.com/marciabcampos).
 
 Paper:
 
